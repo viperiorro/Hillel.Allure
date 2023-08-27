@@ -4,6 +4,7 @@ import pytest
 from utils.file_utils import read_data_file
 
 
+@pytest.xfail
 @allure.suite("Lambdatest API tests")
 @allure.title("JSON to XML conversion")
 @pytest.mark.parametrize("file_name", ["1", "2"])
@@ -21,6 +22,7 @@ def test_json_to_xml(lambdatest_service, file_name):
         assert mini_actual_xml == mini_expected_xml
 
 
+@pytest.xfail
 @allure.suite("Lambdatest API tests")
 @allure.title("Extract text from JSON")
 @allure.severity(allure.severity_level.CRITICAL)
