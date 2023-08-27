@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.10'
-            args '-v /var/jenkins_home/workspace/allure:/app'
+//             args '-v /var/jenkins_home/workspace/allure:/app'
         }
     }
 
@@ -23,15 +23,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh 'cd /app'
-                sh 'python -m pytest -ra --alluredir=allure-results'
+//                 sh 'python -m pytest -ra --alluredir=allure-results'
+                sh 'python -m pytest'
             }
         }
     }
-
-    post {
-        always {
-            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-        }
-    }
-
 }
