@@ -19,10 +19,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker.io') {
-                        dockerImage.run('--rm -v %cd%:/app -w /app',
-                            'bash -c "python -m pytest -ra -vv --alluredir=allure-results || echo Pytest failed"')
-                    }
+                    def runArgs = "--rm -v %cd%:/app -w /app"
+                    def testCmd = "python -m pytest -ra -vv --alluredir=allure-results || echo Pytest failed"
+                    sh "docker run ${runArgs} my-app ${testCmd}"
                 }
             }
         }
@@ -30,7 +29,7 @@ pipeline {
 
     post {
         always {
-            allure commandline: 'allure', includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
 }
