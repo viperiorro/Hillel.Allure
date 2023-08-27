@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-//             args '-v /var/jenkins_home/workspace/allure:/app'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -15,18 +10,27 @@ pipeline {
 
         stage('Prepare Environment') {
             steps {
-                sh 'python -m pip install --upgrade pip'
-                sh 'python -m pip install -r requirements.txt'
+                script {
+                    def appImage = docker.build('my-app')
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'll'
-//                 sh 'cd /app'
-//                 sh 'python -m pytest -ra --alluredir=allure-results'
-                sh 'python -m pytest'
+                script {
+                    docker.image('my-app').inside {
+                        // Run the tests with verbose logging
+                        sh 'python -m pytest -ra -vv --alluredir=allure-results"'
+                    }
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
 }
