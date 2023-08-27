@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.10.0-alpine'
+            image 'python:3.10'
             args '-v /var/jenkins_home/workspace/allure:/app'
         }
     }
