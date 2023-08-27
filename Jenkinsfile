@@ -21,25 +21,10 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                script {
-                    def pythonImage = docker.image('python:3.10')
-                    pythonImage.pull()
-
-                    pythonImage.inside {
-                        // Install dependencies and run tests
-                        bat 'pip install --upgrade pip'
-                        bat 'pip install pytest'
-
-                        // If your tests have additional dependencies, install them here:
-                        // bat 'pip install -r requirements.txt'
-
-                        // Run the tests
-                        bat 'python -m pytest -ra --alluredir=allure-results'
-                    }
-                }
+                // Run the tests
+                sh 'python -m pytest -ra --alluredir=allure-results'
             }
         }
-
     }
 
     post {
