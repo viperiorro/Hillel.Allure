@@ -22,6 +22,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+                sh 'll'
 //                 sh 'cd /app'
 //                 sh 'python -m pytest -ra --alluredir=allure-results'
                 sh 'python -m pytest'
