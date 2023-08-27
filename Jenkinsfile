@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def runArgs = "--rm -v %cd%:/app -w /app"
-                    def testCmd = "python -m pytest -ra -vv --alluredir=allure-results || echo Pytest failed"
+                    def testCmd = "python -m pytest -ra -vv --alluredir=allure-results"
                     sh "docker run ${runArgs} my-app ${testCmd}"
                 }
             }
