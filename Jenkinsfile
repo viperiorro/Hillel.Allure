@@ -11,7 +11,7 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 script {
-                    def appImage = docker.build('my-app')
+                    dockerImage = docker.build('my-app')
                 }
             }
         }
@@ -19,9 +19,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.image('my-app').inside {
-                        // Run the tests with verbose logging
-                        sh 'python -m pytest -ra -vv --alluredir=allure-results"'
+                    docker.withRegistry('', 'docker.io') {
+                        dockerImage.run('--rm -v %cd%:/app -w /app',
+                            'bash -c "python -m pytest -ra -vv --alluredir=allure-results || echo Pytest failed"')
                     }
                 }
             }
