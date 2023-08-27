@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.10.0-alpine'
+            args '-v /var/jenkins_home/workspace/allure:/app'
         }
     }
 
@@ -21,7 +22,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Run the tests
+                sh 'cd /app'
                 sh 'python -m pytest -ra --alluredir=allure-results'
             }
         }
