@@ -21,7 +21,7 @@ pipeline {
                 script {
                     def runArgs = "--rm -v %cd%:/app -w /app"
                     def testCmd = "python -m pytest -ra -vv --alluredir=allure-results"
-                    sh "docker run ${runArgs} my-app ${testCmd}"
+                    bat "docker run ${runArgs} my-app ${testCmd}"
                 }
             }
         }
