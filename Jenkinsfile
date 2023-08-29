@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: jenkins, url: 'https://github.com/viperiorro/Hillel.Allure'
+                git branch: "jenkins", url: 'https://github.com/viperiorro/Hillel.Allure'
             }
         }
 
