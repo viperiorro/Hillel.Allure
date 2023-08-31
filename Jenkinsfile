@@ -20,14 +20,14 @@ pipeline {
             steps {
                 script {
                     // change \\ to / for linux
-                    def cd = "%cd%".replaceAll("\\\\", "/")
+//                     def cd = "%cd%".replaceAll("\\\\", "/")
 
 
                     // Define a variable 'runArgs' for the Docker run arguments.
                     // '--rm': Remove the container after it exits.
                     // '-v %cd%:/app': Mount the current Jenkins workspace (%cd%) into the '/app' directory in the container.
                     // '-w /app': Set the working directory inside the container to /app.
-                    def runArgs = "--rm -v ${cd}:/app -w /app"
+                    def runArgs = "--rm -v '%cd%'':/app -w /app"
 
                     def testCmd = "python -m pytest"
 
