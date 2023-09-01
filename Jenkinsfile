@@ -25,12 +25,18 @@ pipeline {
                     // '-w /app': Set the working directory inside the container to /app.
                     def runArgs = "--rm -v %cd%:/app -w /app"
 
-                    def testCmd = "python -m pytest"
+                    def testCmd = "python -m pytest --alluredir='test-results'"
 
                     // Run the Docker container with the specified arguments and command.
                     bat "docker run ${runArgs} my-app ${testCmd}"
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            allure results: [[path: 'test-results']]
         }
     }
 }
